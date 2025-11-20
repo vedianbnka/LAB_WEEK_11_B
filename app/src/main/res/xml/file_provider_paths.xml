@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--
+        Mendefinisikan path untuk direktori penyimpanan eksternal spesifik aplikasi.
+        Path ini setara dengan Context.getExternalFilesDir(null)
+        name="external_files" adalah nama alias yang akan Anda gunakan dalam kode.
+        path="." berarti Anda mengizinkan akses ke seluruh direktori ini.
+        -->
+    <external-files-path
+        name="my_videos"
+        path="Movies" />
+
+    <!-- Anda juga bisa menambahkan path lain jika perlu, contoh: -->
+    <external-files-path
+        name="my_images"
+        path="Pictures" />
+
+</paths>
