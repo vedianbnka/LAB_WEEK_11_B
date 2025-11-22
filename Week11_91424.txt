@@ -1,0 +1,32 @@
+Link Github : https://github.com/vedianbnka/LAB_WEEK_11_B/
+
+1. Kode yang menangani penyimpanan foto berdasarkan URI (saat user mengambil gambar) adalah:
+
+private fun openImageCapture() {
+    photoInfo =
+        providerFileManager.generatePhotoUri(System.currentTimeMillis())
+    takePictureLauncher.launch(photoInfo?.uri)
+}
+
+2. a. Atribut pertama: uri
+URI adalah alamat unik (content URI) yang menunjuk ke file foto atau video yang akan disimpan. URI ini diberikan ke kamera sebagai lokasi penyimpanan hasil capture, dan juga digunakan aplikasi untuk membaca atau memindahkan file tersebut ke MediaStore. Contohnya:
+content://com.example.lab_week_11_b.camera/my_images/img_12345.jpg
+
+b. Atribut keempat: relativePath
+relativePath adalah folder tujuan penyimpanan di MediaStore, misalnya DIRECTORY_PICTURES untuk foto atau DIRECTORY_MOVIES untuk video. Android 10 ke atas menggunakan nilai ini untuk menentukan lokasi file di Gallery, seperti:
+Pictures/ atau Movies/.
+
+3. Urutan kronologis:
+
+1. User menekan tombol Photo atau Video pada MainActivity.
+2. Aplikasi mengecek permission (khusus Android 9 ke bawah).
+3. Aplikasi membuat FileInfo berisi file, nama file, URI, relativePath, dan mimeType melalui generatePhotoUri() atau generateVideoUri().
+4. URI yang dihasilkan diberikan ke kamera melalui ActivityResultLauncher (TakePicture atau CaptureVideo).
+5. Kamera menulis hasil foto atau video ke lokasi file yang ditunjuk oleh URI tersebut.
+6. Setelah kamera selesai, callback launcher berjalan dan aplikasi memanggil insertImageToStore() atau insertVideoToStore().
+7. ProviderFileManager memasukkan file ke MediaStore dengan cara:
+- Melakukan insert() ke MediaStore untuk membuat entry baru.
+- Membuka InputStream dari file asli di folder internal aplikasi.
+- Membuka OutputStream dari MediaStore.
+- Menyalin data file menggunakan IOUtils.copy().
+8. File kini terdaftar di MediaStore dan muncul di Gallery, dengan nama, lokasi relativePath, dan MIME type yang benar.
